@@ -73,6 +73,7 @@ The system consists of the following agents working together:
 5. **Coder** - Handles code generation and modifications
 6. **Browser** - Performs web browsing and information retrieval
 7. **Reporter** - Generates reports and summaries of the workflow results
+8. **Insight Analyst** - Collects market data using search and crawling tools, analyzes it with Python, and summarizes consumer needs
 
 ## Features
 
@@ -262,6 +263,8 @@ LangManus uses a sophisticated prompting system in the `src/prompts` directory t
     - Website navigation
     - Page interaction (clicking, typing, scrolling)
     - Content extraction from web pages
+- **Reporter ([`src/prompts/reporter.md`](src/prompts/reporter.md))**: Writes professional summaries and final reports for the completed task.
+- **Insight Analyst ([`src/prompts/insight_analyst.md`](src/prompts/insight_analyst.md))**: Searches for market data, performs Python-based analysis, and distills consumer needs.
 
 #### Prompt System Architecture
 

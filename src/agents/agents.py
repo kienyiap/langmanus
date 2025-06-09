@@ -30,3 +30,9 @@ browser_agent = create_react_agent(
     tools=[browser_tool],
     prompt=lambda state: apply_prompt_template("browser", state),
 )
+
+insight_agent = create_react_agent(
+    get_llm_by_type(AGENT_LLM_MAP["insight_analyst"]),
+    tools=[tavily_tool, crawl_tool, python_repl_tool],
+    prompt=lambda state: apply_prompt_template("insight_analyst", state),
+)

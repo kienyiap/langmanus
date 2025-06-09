@@ -6,7 +6,7 @@ from langchain_core.messages import HumanMessage
 from langgraph.types import Command
 from langgraph.graph import END
 
-from src.agents import research_agent, coder_agent, browser_agent
+from src.agents import research_agent, coder_agent, browser_agent, insight_agent
 from src.agents.llm import get_llm_by_type
 from src.config import TEAM_MEMBERS
 from src.config.agents import AGENT_LLM_MAP
@@ -75,6 +75,27 @@ def browser_node(state: State) -> Command[Literal["supervisor"]]:
                         "browser", result["messages"][-1].content
                     ),
                     name="browser",
+                )
+            ]
+        },
+        goto="supervisor",
+    )
+
+
+def insight_node(state: State) -> Command[Literal["supervisor"]]:
+    """Node for the insight analyst agent."""
+    logger.info("Insight analyst agent starting task")
+    result = insight_agent.invoke(state)
+    logger.info("Insight analyst agent completed task")
+    logger.debug(f"Insight analyst response: {result['messages'][-1].content}")
+    return Command(
+        update={
+            "messages": [
+                HumanMessage(
+                    content=RESPONSE_FORMAT.format(
+                        "insight_analyst", result["messages"][-1].content
+                    ),
+                    name="insight_analyst",
                 )
             ]
         },
