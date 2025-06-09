@@ -6,7 +6,12 @@ from .readability_extractor import ReadabilityExtractor
 
 
 class Crawler:
+    def __init__(self) -> None:
+        self.jina_client = JinaClient()
+        self.extractor = ReadabilityExtractor()
+
     def crawl(self, url: str) -> Article:
+        """Fetch a URL and return the parsed article."""
         # To help LLMs better understand content, we extract clean
         # articles from HTML, convert them to markdown, and split
         # them into text and image blocks for one single and unified
@@ -17,10 +22,8 @@ class Crawler:
         #
         # Instead of using Jina's own markdown converter, we'll use
         # our own solution to get better readability results.
-        jina_client = JinaClient()
-        html = jina_client.crawl(url, return_format="html")
-        extractor = ReadabilityExtractor()
-        article = extractor.extract_article(html)
+        html = self.jina_client.crawl(url, return_format="html")
+        article = self.extractor.extract_article(html)
         article.url = url
         return article
 
