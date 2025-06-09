@@ -15,3 +15,8 @@ agent_history.gif
 .env
 
 .idea/
+
+# Node
+node_modules/
+express-server/.env
+
